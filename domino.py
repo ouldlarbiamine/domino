@@ -7,70 +7,87 @@ Created on Thu Mar 25 22:50:07 2021
 import random
 
 class domino:# créer la classe dominio
-    """
-    constructeur qui permet de creer un instance de class Domino 
-    paramaitres:
-        x,y : les deux phase (phase gauche et droite )
-    example :
-        d=domino(1,2)
-        d2=domino(6,6)
-    
-    """
-    def __init__(self, x, y):
+
+    def __init__(self, y, x):
+        
+        """
+        constructeur qui permet de creer un instance de class Domino 
+        paramaitres:
+            x : est un entier qui représente le nombre de points sur la droite 
+            x : est un entier qui représente le nombre de points sur la gauche 
+        Examples:
+            domino(1,2):est un objet domino qui contient 1 sur la gauche et 2 sur la droite
+            domino(6,6):est un objet domino qui contient 6 sur la gauche et 6 sur la droite
+        
+        """
         self.droite = y# nb  point te3. ladroite  
-        self.gauche = x#nb point te3 la gauche 
-    """
-        fonction  qui permet d'afficher un domino 
-        paramaitres:
-            sans paramaitres
-        renvoie :
-            chaine de caracatire de form : |phase gauche | phase droite |
-       
-            
-    
-    """
+            self.gauche = x#nb point te3 la gauche 
     def __str__(self):
+        
+
+        """
+            fonction  qui permet d'afficher un objet domino 
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                chaine de caracatire de form : |phase gauche | phase droite |
+            Examples:
+    
+                >>> d = domino(1,2)
+                >>> d.__str__():returne chaine de caracatire "|1|2|"
+    
+        
+        """
         return str("|"+str( self.gauche)+"|"+str(self.droite)+"|")# pour afichie un domino  exemple |3|6|
-    """
-        fonction  qui permet de transformer un domino 
-        paramaitres:
-            sans paramaitres
-        renvoie :
-            chaine de caracatire de form : |phase gauche | phase droite |
-        exmple 
-         >>>d=domino(5,6)
-         >>>print(d)
-             |5 |6 | 
-         >>>d.pivoter()
-         >>>print(d)
-                 |6 |5 | 
        
-            
-    """    
     def pivoter(self):
+    """
+            fonction  qui permet de transformer un domino 
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                sans sortie
+            Examples:
+                >>>d=domino(5,6)
+                >>>print(d)
+                |5 |6 | 
+                >>>d.pivoter()
+                >>>print(d)
+                |6 |5 | 
+           
+                
+        """ 
         self.droite,self.gauche=self.gauche,self.droite
-   
-    """
-        fontion qui renovie le nbr de point a droite
-        sans paramaitre 
-        ex :
-            >>>d=domino(5,6)
-            >>>print(d.get_droite())
-                        6
-            
-    """
+       
     def get_droite(self):
-        return self.droite
-    """
-        fontion qui renovie le nbr de point a gauche
-        sans paramaitre 
-        ex :
-            >>>d=domino(5,6)
-            >>>print(d.get_gauche())
-                        5
-            
-    """
+    
+        """
+            fontion qui renovie le nbr de point a droite
+            paramaitres:
+                sans paramaitre 
+            renvoie :
+                un entier qui représente le nombre de points sur la droite 
+            Examples:
+                >>>d=domino(5,6)
+                >>>print(d.get_droite())
+                6
+                
+        """
+            return self.droite
     def get_gauche(self):
+
+        """
+            fontion qui renovie le nbr de point a gauche
+            paramaitres:
+                sans paramaitre 
+            renvoie :
+                un entier qui représente le nombre de points sur la gauche
+            Examples:
+                >>>d=domino(5,6)
+                >>>print(d.get_gauche())
+                5
+                
+        """
         return self.gauche
         
     
@@ -80,116 +97,231 @@ class domino:# créer la classe dominio
         
         
 class Maillon:
-    #constructeur 
+    
     def __init__(self,d):
+    
+        """
+        constructeur qui permet de creer un instance de class Maillon 
+        paramaitres:
+            d : est un objet domino
+            
+        Examples:
+            Maillon(domino(1,2)):est un objet Maillon qui contient 1 sur la gauche et 2 sur la droite
+        
+        """
         self._domino=d
-        self.tete=None
-        self.queue=None
-    #str methode 
+        self.tete=None# pointeure maillon de tete
+        self.queue=None# pointeure maillon de queue
+     
     def __str__(self):
+        
+    """
+            fonction  qui permet d'afficher un objet Maillon 
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                chaine de caracatire de form : |phase gauche | phase droite |
+            Examples:
+    
+                >>> M =  Maillon(domino(4,2))
+                >>> M.__str__():returne chaine de caracatire "|4|2|"
+    
+        
+        """   
         return self._domino.__str__()
-    # renvoie element droite 
+
     def get_val_droite(self):
+
+        """
+            fontion qui renovie le nbr de point a droite
+            paramaitres:
+                sans paramaitre 
+            renvoie :
+                un entier qui représente le nombre de points sur la droite 
+            Examples:
+                >>> M =  Maillon(domino(4,2))
+                >>> M.get_val_droite()
+                    2
+    
+    
+        """
+
         return self._domino.get_droite()
-    #renvoie element gauche 
+       
     def get_val_gauche(self):
+        """
+            fontion qui renovie le nbr de point a gauche
+            paramaitres:
+                sans paramaitre 
+            renvoie :
+                un entier qui représente le nombre de points sur la droite 
+            Examples:
+                >>> M =  Maillon(domino(4,2))
+                >>> M.get_val_gauche()
+                    4
+    
+    
+        """ 
         return self._domino.get_gauche()
-    """
-            fonction renvoie true si les deux phase sans egeaux
-            par ex:
-                m=Maillon(domino(5,5))
-                print(m.est_double())
-                    True
-                m2=Maillon(domino(6,5))
-                print(m2.est_double())
-                    False
-    """
+    
     def est_double(self):
+        """
+                fonction renvoie true si les deux phase sans egeaux
+                paramaitres:
+                    sans paramaitre 
+                renvoie :
+                    sans sorie 
+                
+                par ex:
+                    >>>m=Maillon(domino(5,5))
+                    >>>print(m.est_double())
+                        True
+                    >>>m2=Maillon(domino(6,5))
+                    >>>print(m2.est_double())
+                        False
+        """
         if self.get_val_droite()==self.get_val_gauche():
             return True
         else:
             return False
-    """
-            fonction compare entre maillon current et un autre maillon et comparer ces valeur 
-            paramaitre : 
-                Maillon M
-            return :
-                true si m.domino =M.domino  ou bien m.domino =M.domino.pivoter()
-            par ex:
-                m=Maillon(domino(5,5))
-                m2=Maillon(domino(5,5))
-                print(m.domino_egale_domino(m2))
-                    True
-                m3=Maillon(domino(6,5))
-                print(m.domino_egale_domino(m3))
-                    False
-    """
+    
     def domino_egale_domino(self,Maillon2):
+        """
+                fonction compare entre maillon current et un autre maillon et comparer ces valeur 
+                paramaitre : 
+                    Maillon M
+                return :
+                    true si m.domino =M.domino  ou bien m.domino =M.domino.pivoter()
+                par ex:
+                    >>>m=Maillon(domino(5,2))
+                    >>>m2=Maillon(domino(2,5))
+                    >>>print(m.domino_egale_domino(m2))
+                        True
+                    >>>m3=Maillon(domino(6,5))
+                    >>>print(m.domino_egale_domino(m3))
+                        False
+        """
         if self.get_val_droite()==Maillon2.get_val_gauche() and Maillon2.get_val_droite()==self.get_val_gauche() :
             return True
         elif self.get_val_droite()==Maillon2.get_val_droite() and  Maillon2.get_val_gauche()==self.get_val_gauche() :
             return True
         else:
             return False
-    """
-            fonction verifier si un entier n apparaite dans le domino  
-            paramaitre : 
-                n
-            return :
-                true si m.domino.gauche=n ou m.domino.droite=n
-            par ex:
-                m=Maillon(domino(5,5))
-                
-                print(m.si_val_in(5))
-                    True
-               
-                print(m.si_val_in(3))
-                    False
-    """
     def si_val_in(self,n):
+        
+    
+        """
+                fonction verifier si un entier n apparaite dans le domino  
+                paramaitre : 
+                    n :  de  type enier
+                return :
+                    true si m.domino.gauche=n ou m.domino.droite=n
+                par ex:
+                    >>>m=Maillon(domino(5,5))
+                    
+                    >>>print(m.si_val_in(5))
+                        True
+                   
+                    >>>print(m.si_val_in(3))
+                        False
+        """
         if  self.get_val_droite()==n or self.get_val_gauche()==n:
             return True
         else:
             return False
-    """
-            fonction pivoter un maillon
-              sans paramaitre : 
-                
-            
-            par ex:
-                m=Maillon(domino(5,2))
-                
-                print(m.pivoter_maillon())
-                    |2 |5 |
-               
-                
-    """ 
+ 
     def  pivoter_maillon(self):
+        """
+                fonction pivoter un maillon
+                  sans paramaitre 
+                    
+                
+                par ex:
+                    >>>m=Maillon(domino(5,2))
+                    >>>print(m)
+                        |5|2|
+                    
+                    >>>print(m.pivoter_maillon())
+                        |2|5|
+                   
+                    
+        """
         self._domino.pivoter()
+ 
+    def somme_des_point(self):
         """
             fonction calculer la somme de  un maillon 
-              sans paramaitre : 
+            paramaitre:
+                sans paramaitre
                 
-            renvoie la somme de point 
+            renvoie:
+                la somme de point de type entier
             par ex:
-                m=Maillon(domino(5,2))
+                >>>m=Maillon(domino(5,2))
                 
-                print(m.somme_des_point())
+                >>>print(m.somme_des_point())
                     7
+                >>>m2=Maillon(domino(6,5))
+                >>>print(m2.somme_des_point())
+                    11
                
-                
-    """ 
-    def somme_des_point(self):
+                    
+        """
         return self.get_val_droite() + self.get_val_gauche()
 
 
-        
+
 class Liste:
-    #contsteur
+    
     def __init__(self):
+        
+        """
+            constructeur qui permet de creer une Liste des maillon  lié côte à côte
+            paramaitres:
+                sans paramaitre
+            renvoie:
+                objet liste =NONE
+        
+                
+            Examples:
+                >>>l=Liste()
+                >>>print(l)
+                >>>None 
+        """
         self.list_domino=None
+    
         
     def __str__(self):
+        
+        """
+            fonction  qui permet d'afficher un objet liste 
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                chaine de caracatire 
+            Examples:
+                >>>l=Liste()
+                >>>print(l)
+                >>>None
+                
+                >>>m=Maillon(domino(5,2))
+                >>>l.ajout_tete(m)
+                >>>print(l)
+                >>>|5|2|
+                
+                
+                >>>m2=Maillon(domino(5,5))
+                >>>l.ajout_tete(m)
+                >>>print(l)
+                >>>|5|5| |5|2|
+                
+                
+                
+            
+        """
+        if self.list_domino==None:
+            return None
+
         p=self.list_domino
         ch=""
         
@@ -199,17 +331,44 @@ class Liste:
         
 
         return ch
+
+    
+    def  ajout_tete(self,element):
+        
+        
         """
             fonction ajouer un element a la tete de la list  
-            paramaitre : 
+            paramaitres:
                 element : maillon
-            par ex:
-                m=Maillon(domino(5,5))
-                l=List()
-                l.ajout_tete(m)
-         
-    """
-    def  ajout_tete(self,element):
+            renvoie :
+                 sans sortie
+            Examples:
+                >>>l=Liste()
+                >>>print(l)
+                >>>None
+                
+                >>>m=Maillon(domino(2,2))
+                >>>l.ajout_tete(m)
+                >>>print(l)
+                >>>|2|2|
+                
+                
+                >>>m2=Maillon(domino(2,3))
+                >>>l.ajout_tete(m)
+                >>>print(l)
+                >>>|3|2| |2|2|
+                
+                
+                
+                >>>m2=Maillon(domino(3,6))
+                >>>l.ajout_tete(m)
+                >>>print(l)
+                >>>|6|3| |3|2| |2|2|
+                
+                
+                
+            
+        """
         
         if self.list_domino==None:
             self.list_domino=element
@@ -223,17 +382,45 @@ class Liste:
             self.list_domino.tete=element
             element.queue= self.list_domino
             self.list_domino=element     
-    """
-         fonction ajouer un element a la fin  de la list  
-            paramaitre : 
-                element : maillon
-            par ex:
-                m=Maillon(domino(5,6))
-                
-                l.ajout_tete(m)
-    """
+    
 
     def  ajout_queue(self,element):
+
+
+        
+        """
+            fonction ajouer un element a la fin  de la list  
+            paramaitres:
+                element : maillon
+            renvoie :
+                 sans sortie
+            Examples:
+                >>>l=Liste()
+                >>>print(l)
+                >>>None
+                
+                >>>m=Maillon(domino(2,2))
+                >>>l.ajout_queue(m)
+                >>>print(l)
+                >>>|2|2|
+                
+                
+                >>>m2=Maillon(domino(2,3))
+                >>>l.ajout_queue(m)
+                >>>print(l)
+                >>>|2|2| |2|3|
+                
+                
+                
+                >>>m2=Maillon(domino(6,3))
+                >>>l.ajout_queue(m)
+                >>>print(l)
+                >>>|2|2| |2|3| |3|6|
+                
+                
+                
+            
+        """
         if self.list_domino==None:
             self.list_domino=element
         else:
@@ -246,15 +433,38 @@ class Liste:
                 element.pivoter_maillon()
             p.queue=element
             element.tete=p
-    """
-    fontion  renvoyant le domino situé à l’indice i.
-    paramaite :
-        i :index 
-    return : domino numero i ;
+
     
-    """
+
 
     def valeur(self,i):
+        
+    
+        """
+            fontion  renvoyant le domino situé à la position i+1. 
+            paramaitres:
+                i :index de type entier
+            renvoie :
+                 maillon  numero i  type Maillon
+            Examples:
+                >>>l=Liste()
+                >>>m=Maillon(domino(2,2))
+                >>>m2=Maillon(domino(2,3))
+                >>>m3=Maillon(domino(6,3))
+                >>>l.ajout_queue(m)
+                >>>l.ajout_queue(m2)
+                >>>l.ajout_queue(m3)
+                >>>print(l)
+                >>>|2|2| |2|3| |3|6|
+                >>>print(l.valeur(1))
+                   |2|2|
+                >>>print(l.valeur(3))
+                   |3|6|
+                         
+                
+                
+            
+        """
         p=self.list_domino
         cpt=1
         while cpt<i:
@@ -265,15 +475,44 @@ class Liste:
             return 
         else:
             return p
-    """
-    fontion  compte
-    renovie la longeur des la list 
-    
-    
-    """
+
     def compt(self):
+
+        
+        """
+            fontion  qui calculer  la longeur des la list 
+            
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                 nombre des domino : entier
+            Examples:
+                >>>l=Liste()
+                >>>print(l.compt())
+                0
+
+                >>>m=Maillon(domino(2,2))
+                >>>m2=Maillon(domino(2,3))
+                >>>m3=Maillon(domino(6,3))
+                >>>l.ajout_queue(m)
+                >>>print(l.compt())
+                1
+                >>>l.ajout_queue(m2)
+                >>>print(l.compt())
+                2
+                >>>l.ajout_queue(m3)
+                >>>print(l.compt())
+                3
+
+                         
+                
+                
+            
+        """
         if  self.list_domino==None:
             return  0
+        
+    
         
         p=self.list_domino
         cpt=1
@@ -281,14 +520,43 @@ class Liste:
             cpt+=1
             p=p.queue
         return cpt
-    """
-    fontion  suprime un domino .
-    paramaite :
-        element  :domino  
-    
-    
-    """
+
     def supprime(self,n):
+        """
+            fontion  qui calculer  la longeur des la list 
+            
+            paramaitres:
+                n: Maillon
+            renvoie :
+                 sans sortie
+            Examples:
+                >>>l=Liste()
+                >>>print(l.compt())
+                0
+
+                >>>m=Maillon(domino(2,2))
+                >>>m2=Maillon(domino(2,3))
+                >>>m3=Maillon(domino(6,3))
+                >>>l.ajout_queue(m)
+                >>>l.ajout_queue(m2)
+                >>>l.ajout_queue(m3)
+                >>>l.supprime(Maillon(domino(5,2)))
+                >>>print(l)
+                |2|2| |2|3| |3|6|
+                
+                >>>l.supprime(Maillon(domino(2,2)))
+                >>>print(l)
+                |2|3| |3|6|
+                
+                >>>l.supprime(Maillon(domino(3,2)))
+                >>>print(l)
+                |3|6|
+
+                         
+                
+                
+            
+        """
         if self.list_domino.domino_egale_domino(n):
             x = self.list_domino
             self.list_domino = x.queue
@@ -310,64 +578,177 @@ class Liste:
                 q=p.tete
                 q.queue=p.queue
                 p=None
-    """
-    fontion  renvoie le valeur de la queue de la liste 
-    sans paramaite :
-        
+
     
-    
-    """    
 
         
     def val_de_queque(self):
+        """
+            fontion  renvoie le valeur de la queue de la liste  
+            
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                 nombre point sur la queque : entier
+            Examples:
+                >>>l=Liste()
+                >>>print(l.compt())
+                0
+
+                >>>m=Maillon(domino(2,2))
+                >>>m2=Maillon(domino(2,3))
+                >>>m3=Maillon(domino(6,3))
+                >>>l.ajout_queue(m)
+                >>>l.ajout_queue(m2)
+                >>>l.ajout_queue(m3)
+                >>>print(l)
+                |2|2| |2|3| |3|6|
+                >>>print(l.val_de_queque())
+                  6
+
+            
+        """
         p=self.list_domino
         while p.queue!=None:
             p=p.queue
         
         return p.get_val_droite()
-    """
-    fontion  renvoie le valeur de la tete de la liste 
-    sans paramaite :
-        
-    
-    
-    """    
+
         
     def val_de_tete(self):
+        """
+             fontion  renvoie le valeur de la tete de la liste  
+            
+            paramaitres:
+                sans paramaitres
+            renvoie :
+                 nombre point sur la queque : entier
+            Examples:
+                >>>l=Liste()
+                >>>print(l.compt())
+                0
+
+                >>>m=Maillon(domino(2,2))
+                >>>m2=Maillon(domino(2,3))
+                >>>m3=Maillon(domino(6,3))
+                >>>l.ajout_queue(m)
+                >>>l.ajout_queue(m2)
+                >>>l.ajout_queue(m3)
+                >>>print(l)
+                |2|2| |2|3| |3|6|
+                >>>print(l.val_de_tete())
+                  2
+
+            
+        """
         return self.list_domino.get_val_gauche()
-'''
-fontion qui afficher le cotenu de la main d'un joueur
-arguement  
-    main : list des domino 
-    retourne : chaine de caracaitre qui represent la main de joueur 
-'''
+
 def afiche_main_joueur(main):
+    """
+         fontion qui afficher le cotenu de la main d'un joueur  
+        
+        paramaitres:
+            main:liste des Maillo
+        renvoie :
+              chaine de caracaitre qui represent la main de joueur
+        Examples:
+            >>>m=Maillon(domino(2,2))
+            >>>m2=Maillon(domino(5,3))
+            >>>m3=Maillon(domino(4,3))
+            >>>main=[m,m2,m3]
+            >>>afiche_main_joueur(main)
+            |2|2| |5|3| |4|6|
+
+        
+    """
     ch=""
     for  m in main:
         ch+=str(m.__str__())+"  "
     print (ch)
-'''
-fontion qui afficher le cotenu de la main d'un joueur
-arguement  
-    main : list des domino 
-    retourne : chaine de caracaitre(?,?)  qui represent la main de pc 
-    on affiche ? pour que le joueur ne connait pas ce qui est chez le pc 
-    
-'''
+
 def afiche_main_PC(main):
+    """
+         fontion qui afficher le cotenu de la main d'un ordinateur
+        
+        paramaitres:
+            main:liste des Maillo
+        renvoie :
+              chaine de caracaitre qui represent la main de joueur
+              on affiche |?|?| pour que le joueur ne connait pas ce qui est chez le pc 
+
+        Examples:
+            >>>m=Maillon(domino(2,2))
+            >>>m2=Maillon(domino(5,3))
+            >>>m3=Maillon(domino(4,3))
+            >>>main=[m,m2,m3]
+            >>>afiche_main_PC(main)
+            |?|?| |?|?| |?|?|
+
+        
+    """
     ch=""
     for  m in main:
         ch+="|?|?|"+"  "
     print (ch)
-'''
-fontion qui creer des  main pour le pc et joueur aleatoirement 
-sans arguement  
-retourne :dictionnaire 
-        cle:value { joueur 1: 7 domino, pc :7 domino , rest :14 domino}
-        
     
-'''
+  
 def creer_deux_mains():
+    
+    """
+        fontion qui creer des  main pour l'ordinateur et joueur aleatoirement 
+                
+        paramaitres:
+            sans arguement
+        renvoie :dictionnaire
+            d={"main_joueur": 7 domino,"main_PC": 7 domino,"le_reste_de_domino":14 domino}
+
+        Example1:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |0|1|  |5|5|  |1|3|  |5|6|  |2|5|  |0|0|  |3|6|
+            
+            >>>>afiche_main_joueur(d['main_PC'])
+            |2|2|  |1|6|  |1|5|  |0|6|  |0|4|  |0|5|  |3|3|
+            
+            >>>>afiche_main_joueur(d['le_reste_de_domino'])
+            |1|1|  |1|4|  |0|3|  |0|2|  |2|4|  |4|5|  |4|4| 
+            |3|4|  |2|3|  |3|5|  |6|6|  |4|6|  |1|2|  |2|6| 
+            
+            
+
+        Example2:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |2|4|  |5|5|  |3|4|  |1|6|  |3|5|  |0|4|  |0|3|  
+
+            
+            >>>>afiche_main_joueur(d['main_PC'])
+            |5|6|  |6|6|  |1|4|  |3|6|  |1|3|  |4|6|  |2|6|  
+            
+            >>>>afiche_main_joueur(d['le_reste_de_domino'])
+            |1|5|  |0|5|  |4|5|  |1|2|  |0|1|  |0|0|  |2|5| 
+            |3|3|  |2|2|  |1|1|  |2|3|  |0|6|  |4|4|  |0|2|  
+        Example:
+            >>>afiche_main_joueur(d['main_joueur'])
+            |2|4|  |5|5|  |3|4|  |1|6|  |3|5|  |0|4|  |0|3|  
+
+            #on affiche |?|?| pour que le joueur ne connait pas 
+            #ce qui est chez le pc  et le  reste 
+
+            >>>>afiche_main_pc(d['main_PC'])
+            |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  |?|?|
+        
+            
+            >>>>afiche_main_cp(d['le_reste_de_domino'])
+            |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  
+            |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  |?|?|  |?|?|
+
+            
+  
+  
+
+        
+    """
     l=[]
     cpt=0
     for i in range(0,7):
@@ -415,26 +796,61 @@ def creer_deux_mains():
  
     d={"main_joueur":main_joueur,"main_PC":main_PC,"le_reste_de_domino":le_reste_de_domino}
     return d
-"""
-recherche dans un main si il y a un  domino double 
-pararmatire :
-    main : les domino d'un joueyr ou pc
-renvoie : true si l'un des ces domino est double (ces deux phase egaux)
-"""
+
 def rechercher_le_domino_double(main):
+    
+    """
+         fontion qui afficher le cotenu de la main d'un joueur  
+        
+        paramaitres:
+              main:les domino d'un jouer ou l'ordinateur
+        renvoie :
+              boolean:True si l'un des ces domino est double (ces deux phase egaux)
+                      False si il n'y a pas un domino est double (ces deux phase egaux)
+        Examples:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |2|4|  |5|5|  |3|4|  |1|6|  |3|5|  |0|4|  |0|3|
+            >>>print(rechercher_le_domino_double(d['main_joueur']))
+            True
+            
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |5|6| |6|4| |4|0| |0|6| |6|1| |1|0| |6|2| |2|4| 
+            >>>print(rechercher_le_domino_double(d['main_joueur']))
+            False
+    """
     for m in main:
         if m.est_double():
             return True
     return False
         
-"""
-recherche dans un main et renovie le maillon qui est un domin double plus grand 
-pararmatire :
-    main : les domino d'un joueyr ou pc
-renvoie : le double le plus grand 
-"""        
+ 
 
 def rechercher_le_domino_double_de_valeur_la_plus_elevee(main):
+    
+    
+    """
+        recherche dans un main et renovie le maillon qui est un domin double plus grand 
+
+        
+        paramaitres:
+              main:les domino d'un jouer ou l'ordinateur
+        renvoie :
+               le Maillon le plus grand
+        Examples:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |2|4|  |5|5|  |3|4|  |1|6|  |3|3|  |0|4|  |0|3|
+            >>>print(rechercher_le_domino_double_de_valeur_la_plus_elevee(d['main_joueur']))
+            |5|5|
+            
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |4|4| |4|5| |5|1| |1|1| |1|4| |4|3| |3|3| 
+            >>>print(rechercher_le_domino_double_de_valeur_la_plus_elevee(d['main_joueur']))
+            |4|4|
+    """
     val_max=-1
     
     for m in main:
@@ -444,13 +860,25 @@ def rechercher_le_domino_double_de_valeur_la_plus_elevee(main):
                 Maillon_max=m
     return Maillon_max  
         
-"""
-recherche dans un main et renovie le maillon plus grand  en terme de somme des ceselements 
-pararmatire :
-    main : list des domino d'un joueyr ou pc
-renvoie : le maillon  plus grand 
-"""    
+   
 def Rechercher_la_piece_qui_a_le_plus_grand_somme_de_points(main):
+    """
+        recherche dans un main et renovie le maillon plus grand  en terme de somme des ceselements 
+
+        
+        paramaitres:
+              main:les domino d'un jouer ou l'ordinateur
+        renvoie :
+               le Maillon le plus grand
+        Examples:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |2|4|  |6|5|  |3|4|  |1|6|  |6|3|  |0|4|  |0|3|
+            >>>print(Rechercher_la_piece_qui_a_le_plus_grand_somme_de_points(d['main_joueur']))
+            |6|5|
+            
+
+    """
     som_max=-1
     
     for m in main:
@@ -460,47 +888,93 @@ def Rechercher_la_piece_qui_a_le_plus_grand_somme_de_points(main):
             Maillon_max=m
     return Maillon_max  
 
-"""
-fonction qui renvoie la somme des maillon d'une main
-paramatire : 
-    main : list des domino
-renovie : 
-    la somme des domino 
 
-"""
 def somme_de_points_main(main):
+    """
+        fonction qui renvoie la somme de point des  maillon d'une main
+
+        
+        paramaitres:
+              main:les domino d'un jouer ou l'ordinateur
+        renvoie :
+               la somme des domino :entier   
+        Examples:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |1|5|  |3|5|  |3|6|  |6|6|  |5|5|  |1|3|  |1|6|  
+            
+            >>>print(somme_de_points_main(d['main_joueur']))
+            56
+            
+
+    """
+
     s=0
     
     for m in main:
         s+=m.somme_des_point()
 
     return s  
-"""
-fonction qui suprimme un maillon m depuis main 
-paramaitre :
-    main : list des domino
-    m : maillon 
-renvoie main sans dominon m
 
-
-"""
 def  Supprimer_un_domino_de_la_main(main,m):
+    
+    """
+        fonction qui suprimme un maillon m depuis main 
+
+        
+        paramaitres:
+              main:les domino d'un jouer ou l'ordinateur
+        renvoie :
+               sans sortier   
+        Examples:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |1|5|  |3|5|  |3|6|  |6|6|  |5|5|  |1|3|  |1|6|  
+            
+            >>>Supprimer_un_domino_de_la_main(d['main_joueur'],Maillon(domino(6,6)))
+            >>>afiche_main_joueur(d['main_joueur'])
+            |1|5|  |3|5|  |3|6|  |5|5|  |1|3|  |1|6|  
+            
+            >>>Supprimer_un_domino_de_la_main(d['main_joueur'],Maillon(domino(6,1)))
+            >>>afiche_main_joueur(d['main_joueur'])
+            |1|5|  |3|5|  |3|6|  |5|5|  |1|3|
+            
+
+    """
     j=0
     for m2 in main:
         if m2.domino_egale_domino(m):
             del main[j]
         j+=1
 
-"""
-fonction qui si on peut ajouter un domino a un main 
-paramaitre :
-    main : list des domino
-    m : maillon 
-renvoie true si les extrimite de la list (tete et queue ) on un phase ou plus
-avec mm valeur que domino  phase 
-
-"""            
+         
 def  si_il_peut_jouer(main,jue):
+    
+    
+    
+    """
+        fonction qui si on peut ajouter un domino a la table de jue
+        
+        paramaitres:
+              main:les domino d'un jouer ou l'ordinateur
+        renvoie: true si les extrimite de la list (tete et queue ) on un phase ou plus
+        Examples:
+            >>>d=creer_deux_mains()
+            >>>afiche_main_joueur(d['main_joueur'])
+            |1|5|  |3|5|  |3|6|  |0|5|  |6|5|  |1|3|  |1|6|  
+            
+            
+            on Suppose les domino qui a éte joue est 
+            >>> jue =liste()
+            >>>jue.ajouter_tete(Maillon(domino(6,6)))
+            >>>print(jue) 
+            |6|6| 
+            >>>print(si_il_peut_jouer(d['main_joueur']),jue))
+            True
+    
+        
+            
+    """
     t=jue.val_de_queque()
     q=jue.val_de_queque()
     for m in main:
@@ -524,14 +998,6 @@ def  si_il_peut_jouer(main,jue):
 
 
 
-
-
-
-
-
-
-
-
 d=creer_deux_mains()
 main_joueur=d['main_joueur']
 
@@ -539,7 +1005,8 @@ main_PC=d['main_PC']
 le_reste_de_domino=d['le_reste_de_domino']
                                                                                                                                                                                                                                                                                                 
 
-
+afiche_main_joueur(main_joueur)
+print(somme_de_points_main(main_joueur))
 
 '''
 Recherche d'un morceau de dominos pour commencer à jouer 
@@ -1094,8 +1561,7 @@ while (main_joueur!=[] and main_PC!=[] and b) :
     print("- le reste de domino ")
     if le_reste_de_domino==[]:
         print("vide")
-    else:
-        
+    else:    
         afiche_main_PC(le_reste_de_domino)
     print(" - Pièces qui ont été jouées  ")
     print(joue)
